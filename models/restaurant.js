@@ -42,4 +42,5 @@ const restaurantSchema = new Schema({
     required: true
   },
 })
+// mongoose.model內的字串Restaurant為document名稱(values for initial set)
 module.exports = mongoose.model('Restaurant', restaurantSchema)
