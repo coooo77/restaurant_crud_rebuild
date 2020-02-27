@@ -37,21 +37,34 @@ app.use(express.static('public'))
 
 // restaurants首頁
 app.get('/', (req, res) => {
-  res.render('index')
+  Restaurant.find()
+    .lean()
+    .exec((err, restaurants) => {
+      if (err) return console.error(err)
+      // console.log(restaurants)
+      return res.render('index', { restaurants })
+    })
 })
 
-// restaurants搜尋頁面
+// restaurants搜尋頁面 兩個做法 1.先輸出整份清單，用JS比對 2.用mongodb指令去找
+// 因時間不夠所以先試著用1.，之後回頭研究U82
 app.get('/search', (req, res) => {
   const word = req.query.keyword
-  const search = restaurantList.results.filter(restaurant => {
-    return restaurant.name.toLowerCase().includes(word.toLowerCase()) || restaurant.category.toLowerCase().includes(word.toLowerCase())
-  })
-  res.render('index', { list: search, keyword: word })
+  Restaurant.find()
+    .lean()
+    .exec((err, restaurants) => {
+      if (err) return console.error(err)
+      const search = restaurants.filter(restaurant => {
+        return restaurant.name.toLowerCase().includes(word.toLowerCase()) || restaurant.category.toLowerCase().includes(word.toLowerCase())
+      })
+      res.render('index', { restaurants: search, keyword: word })
+    })
 })
 
 // Read 取得所有表單
 app.get('/restaurants', (req, res) => {
-  res.send('Read 取得所有表單')
+  // return res.redirect('/')
+  res.redirect('/')
 })
 
 // create 取得新增表單頁面
