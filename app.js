@@ -81,7 +81,7 @@ app.get('/restaurants/new', (req, res) => {
 // 先檢驗req的資料如果不齊全，就導向新增的頁面，並顯示有資料填寫不齊全
 // 資料齊全，就存資料 導覽至主頁
 // 針對資料輸入的優化，等時間夠再來修正 (例如Rating跟phone都是數字)
-// 有排版上的問題，等時間夠再來修正
+// 有排版上的問題，超過九個內容就會排版錯誤，等時間夠再來修正
 app.post('/restaurants', (req, res) => {
 
   if (listCheck(req.body)) {
@@ -151,7 +151,13 @@ app.post('/restaurants/:id/edit', (req, res) => {
 
 // Delete 刪除一筆表單
 app.post('/restaurants/:id/delete', (req, res) => {
-  res.send('Delete 刪除一筆表單')
+  Restaurant.findById(req.params.id, (err, data) => {
+    if (err) return console.error(err)
+    data.remove(err => {
+      if (err) return console.error(err)
+      return res.redirect('/')
+    })
+  })
 })
 
 app.listen(port, () => {
