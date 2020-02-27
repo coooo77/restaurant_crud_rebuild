@@ -110,7 +110,12 @@ app.post('/restaurants', (req, res) => {
 
 // Read 取得特定表單內容
 app.get('/restaurants/:id', (req, res) => {
-  res.send('Read 取得特定表單內容')
+  Restaurant.findById(req.params.id)
+    .lean()
+    .exec((err, restaurant) => {
+      if (err) return console.error(err)
+      return res.render('show', { list: restaurant })
+    })
 })
 
 // Update 取得修改表單頁面
