@@ -120,13 +120,34 @@ app.get('/restaurants/:id', (req, res) => {
 
 // Update 取得修改表單頁面
 app.get('/restaurants/:id/edit', (req, res) => {
-  res.send('Update 取得修改表單頁面')
+  Restaurant.findById(req.params.id)
+    .lean()
+    .exec((err, restaurant) => {
+      if (err) return console.error(err)
+      return res.render('edit', { list: restaurant })
+    })
 })
 
 // Update 修改表單
 app.post('/restaurants/:id/edit', (req, res) => {
-  res.send('Update 修改表單')
+  Restaurant.findById(req.params.id, (err, data) => {
+    if (err) return console.error(err)
+    data.name = req.body.name
+    data.name_en = req.body.name_en
+    data.category = req.body.category
+    data.image = req.body.image
+    data.location = req.body.location
+    data.phone = req.body.phone
+    data.google_map = req.body.google_map
+    data.rating = req.body.rating
+    data.description = req.body.description
+    data.save(err => {
+      if (err) return console.error(err)
+      return res.redirect(`/restaurants/${req.params.id}`)
+    })
+  })
 })
+
 
 // Delete 刪除一筆表單
 app.post('/restaurants/:id/delete', (req, res) => {
