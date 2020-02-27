@@ -1,10 +1,10 @@
 const express = require('express')
 const app = express()
 const port = 3000
+const exphbs = require('express-handlebars')
 const Restaurant = require('./models/restaurant')
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/restaurant_list', { useNewUrlParser: true, useUnifiedTopology: true })
-
 const db = mongoose.connection
 
 db.on('error', () => {
@@ -31,9 +31,22 @@ db.once('open', () => {
 // 使用者可以刪除一家餐廳
 // Delete 刪除一筆表單 POST http://localhost:3000/restaurants/:id/delete
 
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.set('view engine', 'handlebars')
+app.use(express.static('public'))
+
 // restaurants首頁
 app.get('/', (req, res) => {
-  res.send('Hello world')
+  res.render('index')
+})
+
+// restaurants搜尋頁面
+app.get('/search', (req, res) => {
+  const word = req.query.keyword
+  const search = restaurantList.results.filter(restaurant => {
+    return restaurant.name.toLowerCase().includes(word.toLowerCase()) || restaurant.category.toLowerCase().includes(word.toLowerCase())
+  })
+  res.render('index', { list: search, keyword: word })
 })
 
 // Read 取得所有表單
