@@ -24,7 +24,7 @@
       <div class="card-columns">
         {{#each restaurants}}
           <a href="/restaurants/{{this._id}}" class="text-secondary">
-            <div class="card mb-1">
+            <div class="card mb-3">
               <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
               <div class="card-body p-3">
                 <h6 class="card-title mb-1">{{this.name}}</h6>
@@ -38,16 +38,45 @@
                   <i class="fas fa-star fa-xs"></i>
                 </span>
               </div>
-            </div>
-            <div class="options mt-1 mb-3 d-flex justify-content-end ">
-              <a class="mr-2 mt-1" href="/restaurants/{{this._id}}/edit">Edit</a>
-              <a class="mr-2 mt-1" href="/restaurants/{{this._id}}">Detail</a>
-              <form class="mr-2" method="POST" action="/restaurants/{{this._id}}/delete">
-                <button class="btn btn-danger p-1" type="submit">Delete</button>
-              </form>
+
+              <div class="card-footer options mt-0 pr-2 d-flex justify-content-end"
+                style="background-color: rgba(,255,204,0.2);">
+                <a class="mr-2 mt-1" href="/restaurants/{{this._id}}/edit">Edit</a>
+                <a class="mr-2 mt-1" href="/restaurants/{{this._id}}">Detail</a>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                  Delete
+                </button>
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                  aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          您正在刪除一筆餐廳資料
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        確定要刪除嗎?放棄也是一種選擇唷！
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">放棄</button>
+                        <form method="POST" action="/restaurants/{{this._id}}/delete" style="display: inline;">
+                          <button class="btn btn-danger p-1 btn-lg" type="submit">刪除</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+
             </div>
           </a>
-
         {{/each}}
       </div>
     </div>

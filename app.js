@@ -81,7 +81,7 @@ app.get('/restaurants/new', (req, res) => {
 // 先檢驗req的資料如果不齊全，就導向新增的頁面，並顯示有資料填寫不齊全
 // 資料齊全，就存資料 導覽至主頁
 // 針對資料輸入的優化，等時間夠再來修正 (例如Rating跟phone都是數字)
-// 有排版上的問題，超過九個內容就會排版錯誤，等時間夠再來修正
+// 有排版上的問題，如果不是用card屬性增加edit、Detail、Delete，排版會崩壞
 app.post('/restaurants', (req, res) => {
 
   if (listCheck(req.body)) {
