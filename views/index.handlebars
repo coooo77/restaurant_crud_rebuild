@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-12 col-sm-10 col-md-10 col-lg-10 col-xl-6  mx-auto" id="search-bar">
     <nav class="navbar navbar-light ">
-      <form class="form-inline d-flex justify-content-between w-100 " action="/search">
+      <form class="form-inline d-flex justify-content-between w-100 " action="/sort/search">
         <div class="input-group">
           <div class="input-group-prepend">
             <button class="input-group-text bg-white " type="submit" id="search-button"
@@ -16,10 +16,10 @@
         </div>
         <select class="custom-select" onChange="location = this.options[this.selectedIndex].value;">
           <option selected>分類排序</option>
-          <option value="http://localhost:3000/AtoZ">A到Z</option>
-          <option value="http://localhost:3000/ZtoA">Z到A</option>
-          <option value="http://localhost:3000/category">類別</option>
-          <option value="http://localhost:3000/location">地區</option>
+          <option value="http://localhost:3000/sort/AtoZ">A到Z</option>
+          <option value="http://localhost:3000/sort/ZtoA">Z到A</option>
+          <option value="http://localhost:3000/sort/category">類別</option>
+          <option value="http://localhost:3000/sort/location">地區</option>
         </select>
       </form>
     </nav>
