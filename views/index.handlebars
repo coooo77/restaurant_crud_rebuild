@@ -76,7 +76,8 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">放棄</button>
-                        <form method="POST" action="/restaurants/{{this._id}}/delete" style="display: inline;">
+                        <form method="POST" action="/restaurants/{{this._id}}/delete?_method=DELETE"
+                          style="display: inline;">
                           <button class="btn btn-danger p-1 btn-lg" type="submit">刪除</button>
                         </form>
                       </div>

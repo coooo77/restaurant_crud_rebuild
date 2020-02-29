@@ -3,6 +3,7 @@ const app = express()
 const port = 3000
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 const Restaurant = require('./models/restaurant')
 // 引入js檢查新增資料是否有沒有輸入的情況
 const listCheck = require('./checkNewList')
@@ -29,15 +30,16 @@ db.once('open', () => {
 
 // 使用者可以修改一家餐廳的資訊
 // Update 取得修改表單 GET  http://localhost:3000/restaurants/:id/edit
-// Update 修改表單 POST http://localhost:3000/restaurants/:id
+// Update 修改表單 PUT http://localhost:3000/restaurants/:id/edit_?method=PUT
 
 // 使用者可以刪除一家餐廳
-// Delete 刪除一筆表單 POST http://localhost:3000/restaurants/:id/delete
+// Delete 刪除一筆表單 DELETE http://localhost:3000/restaurants/:id/delete_?method=DELETE
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 
 // restaurants首頁
 app.get('/', (req, res) => {
@@ -177,7 +179,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
 })
 
 // Update 修改表單
-app.post('/restaurants/:id/edit', (req, res) => {
+app.put('/restaurants/:id/edit', (req, res) => {
   Restaurant.findById(req.params.id, (err, data) => {
     if (err) return console.error(err)
     data.name = req.body.name
@@ -198,7 +200,7 @@ app.post('/restaurants/:id/edit', (req, res) => {
 
 
 // Delete 刪除一筆表單
-app.post('/restaurants/:id/delete', (req, res) => {
+app.delete('/restaurants/:id/delete', (req, res) => {
   Restaurant.findById(req.params.id, (err, data) => {
     if (err) return console.error(err)
     data.remove(err => {
