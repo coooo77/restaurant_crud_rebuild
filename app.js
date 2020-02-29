@@ -4,9 +4,6 @@ const port = 3000
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
-const Restaurant = require('./models/restaurant')
-// 引入js檢查新增資料是否有沒有輸入的情況
-const listCheck = require('./checkNewList')
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/restaurant_list', { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection

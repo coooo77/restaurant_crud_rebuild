@@ -2,6 +2,8 @@
 const express = require('express')
 const router = express.Router()
 const Restaurant = require('../models/restaurant')
+// 引入js檢查新增資料是否有沒有輸入的情況
+const listCheck = require('../checkNewList')
 
 // Read 取得所有表單
 router.get('/', (req, res) => {
