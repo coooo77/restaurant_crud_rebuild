@@ -1,20 +1,32 @@
 <!-- search bar -->
-<div class="container search-bar">
-  <div class="search-bar-outer">
-    <div class="search-bar-inner">
-      <form action="/search">
-        <h4 class="mb-2">尋找餐廳：</h4>
+<div class="row">
+  <div class="col-12 col-sm-10 col-md-10 col-lg-10 col-xl-6  mx-auto" id="search-bar">
+    <nav class="navbar navbar-light ">
+      <form class="form-inline d-flex justify-content-between w-100 " action="/search">
         <div class="input-group">
-          <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
-            value="{{keyword}}" aria-describedby="search-button">
-          <div class="input-group-append">
-            <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+          <div class="input-group-prepend">
+            <button class="input-group-text bg-white " type="submit" id="search-button"
+              style="border-radius: 50% 0 0 50%;">
+              <i class="fas fa-search"></i>
+            </button>
           </div>
+          <input type="text" name="keyword" class="form-control border-left-0 " placeholder="輸入餐廳、分類"
+            aria-label="Restaurant Name..." value="{{keyword}}" aria-describedby="search-button"
+            style="border-radius: 0 25px 25px 0;">
         </div>
+        <select class="custom-select" onChange="location = this.options[this.selectedIndex].value;">
+          <option selected>分類排序</option>
+          <option value="http://localhost:3000/AtoZ">A到Z</option>
+          <option value="http://localhost:3000/ZtoA">Z到A</option>
+          <option value="http://localhost:3000/category">類別</option>
+          <option value="http://localhost:3000/location">地區</option>
+        </select>
       </form>
-    </div>
+    </nav>
   </div>
 </div>
+
+
 
 <!-- restaurant list -->
 {{!-- edit detail delete --}}
