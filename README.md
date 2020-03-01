@@ -2,7 +2,7 @@
 
 ## 專案說明 (Project Title)：
 一個以Node.js與Express建立的餐廳資料網站，以清單方式呈現，配合mongoose與mongoDB中資料互動。
-![image](https://i.imgur.com/sx277ze.png)
+![image](https://i.imgur.com/KYaBvVo.png)
 
 ## 環境建置與需求 (prerequisites)：
 * Node Version Manager (nvm) v 1.1.7
