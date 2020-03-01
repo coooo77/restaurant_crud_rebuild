@@ -52,7 +52,6 @@ router.get('/location', (req, res) => {
 })
 
 // restaurants搜尋頁面 兩個做法 1.先輸出整份清單，用JS比對 2.用mongodb指令去找
-// 因時間不夠所以先試著用1.，之後回頭研究U82
 router.get('/search', (req, res) => {
   const word = req.query.keyword
   Restaurant.find()
@@ -60,7 +59,7 @@ router.get('/search', (req, res) => {
     .exec((err, restaurants) => {
       if (err) return console.error(err)
       const search = restaurants.filter(restaurant => {
-        return restaurant.name.toLowerCase().includes(word.toLowerCase()) || restaurant.category.toLowerCase().includes(word.toLowerCase())
+        return restaurant.name.toLowerCase().includes(word.toLowerCase()) || restaurant.category.toLowerCase().includes(word.toLowerCase()) || restaurant.name_en.toLowerCase().includes(word.toLowerCase())
       })
       res.render('index', { restaurants: search, keyword: word })
     })
