@@ -20,7 +20,7 @@ header {
   filter: blur(3px);
 }
 
-#login {
+#login ,#register{
   position: relative;  
   top: -70px;
 }
