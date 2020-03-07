@@ -5,10 +5,34 @@ const Restaurant = require('../models/restaurant')
 // 引入js檢查新增資料是否有沒有輸入的情況
 const listCheck = require('../checkNewList')
 
-// Read 取得所有表單
+// Read 取得所有表單 或 指定的排列
+// Query String不只可以從input得到，用指定的網址也能讀取到 (課文U41)
 router.get('/', (req, res) => {
-  // return res.redirect('/')
-  res.redirect('/')
+  const search_order = req.query.search_order
+  Restaurant.find()
+    .sort(search_order)
+    .lean()
+    .exec((err, restaurants) => {
+      if (err) return console.error(err)
+      // console.log(restaurants)
+      return res.render('index', { restaurants })
+    })
+})
+
+// 取得搜索項目
+router.get('/search', (req, res) => {
+  const word = req.query.keyword
+  Restaurant.find({
+    $or: [
+      { 'name': { "$regex": word.toString(), "$options": "i" } },
+      { 'name_en': { "$regex": word.toString(), "$options": "i" } },
+      { 'category': { "$regex": word.toString(), "$options": "i" } },
+    ]
+  }).lean()
+    .exec((err, restaurants) => {
+      if (err) return console.error(err)
+      res.render('index', { restaurants, keyword: word })
+    })
 })
 
 // create 取得新增表單頁面
@@ -87,7 +111,6 @@ router.put('/:id/edit', (req, res) => {
     })
   })
 })
-
 
 // Delete 刪除一筆表單
 router.delete('/:id/delete', (req, res) => {

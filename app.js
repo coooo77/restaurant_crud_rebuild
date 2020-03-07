@@ -24,7 +24,6 @@ app.use(methodOverride('_method'))
 
 // 載入路由器
 app.use('/', require('./routes/home'))
-app.use('/sort', require('./routes/sort'))
 app.use('/restaurants', require('./routes/restaurant_routes'))
 
 app.listen(port, () => {
