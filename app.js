@@ -25,6 +25,7 @@ app.use(methodOverride('_method'))
 // 載入路由器
 app.use('/', require('./routes/home'))
 app.use('/restaurants', require('./routes/restaurant_routes'))
+app.use('/users', require('./routes/user'))
 
 app.listen(port, () => {
   console.log(`The express is listening on http://localhost:${port}`)

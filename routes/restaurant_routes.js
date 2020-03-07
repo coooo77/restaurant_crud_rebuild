@@ -7,6 +7,7 @@ const listCheck = require('../checkNewList')
 
 // Read 取得所有表單 或 指定的排列
 // Query String不只可以從input得到，用指定的網址也能讀取到 (課文U41)
+// 有空閒回來試著將搜索、排序功能合併
 router.get('/', (req, res) => {
   const search_order = req.query.search_order
   Restaurant.find()
@@ -14,7 +15,6 @@ router.get('/', (req, res) => {
     .lean()
     .exec((err, restaurants) => {
       if (err) return console.error(err)
-      // console.log(restaurants)
       return res.render('index', { restaurants })
     })
 })
