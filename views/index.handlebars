@@ -2,8 +2,8 @@
 <div class="row">
   <div class="col-12 col-sm-10 col-md-10 col-lg-10 col-xl-6  mx-auto" id="search-bar">
     <nav class="navbar navbar-light ">
-      <form class="form-inline d-flex justify-content-between w-100 " action="/restaurants/search">
-        <div class="input-group">
+      <form class="form-inline d-flex justify-content-between w-10 " action="/restaurants/search">
+        <div class="input-group pr-2">
           <div class="input-group-prepend">
             <button class="input-group-text bg-white " type="submit" id="search-button"
               style="border-radius: 50% 0 0 50%;">
@@ -21,6 +21,12 @@
           <option value="http://localhost:3000/restaurants?search_order=category">類別</option>
           <option value="http://localhost:3000/restaurants?search_order=location">地區</option>
         </select>
+      </form>
+      <form action="/restaurants/new" method="get">
+        <button type="submit" class="btn btn-light">
+          <i class="fas fa-plus"></i>
+          新增餐廳清單
+        </button>
       </form>
     </nav>
   </div>
