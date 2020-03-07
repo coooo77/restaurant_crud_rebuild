@@ -20,6 +20,11 @@ header {
   filter: blur(3px);
 }
 
+#login {
+  position: relative;  
+  top: -70px;
+}
+
 /* .search-bar .search-bar-outer {
   margin: 0 auto;
   max-width: 680px;
