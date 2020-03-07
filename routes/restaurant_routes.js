@@ -5,10 +5,12 @@ const Restaurant = require('../models/restaurant')
 // 引入js檢查新增資料是否有沒有輸入的情況
 const listCheck = require('../checkNewList')
 
+const { authenticated } = require('../config/auth')
+
 // Read 取得所有表單 或 指定的排列
 // Query String不只可以從input得到，用指定的網址也能讀取到 (課文U41)
 // 有空閒回來試著將搜索、排序功能合併
-router.get('/', (req, res) => {
+router.get('/', authenticated, (req, res) => {
   const search_order = req.query.search_order
   Restaurant.find()
     .sort(search_order)
@@ -20,7 +22,7 @@ router.get('/', (req, res) => {
 })
 
 // 取得搜索項目
-router.get('/search', (req, res) => {
+router.get('/search', authenticated, (req, res) => {
   const word = req.query.keyword
   Restaurant.find({
     $or: [
@@ -36,7 +38,7 @@ router.get('/search', (req, res) => {
 })
 
 // create 取得新增表單頁面
-router.get('/new', (req, res) => {
+router.get('/new', authenticated, (req, res) => {
   res.render('new')
 })
 
@@ -46,7 +48,7 @@ router.get('/new', (req, res) => {
 // 資料齊全，就存資料 導覽至主頁
 // 針對資料輸入的優化，等時間夠再來修正 (例如Rating跟phone都是數字)
 // 有排版上的問題，如果不是用card屬性增加edit、Detail、Delete，排版會崩壞
-router.post('/', (req, res) => {
+router.post('/', authenticated, (req, res) => {
 
   if (listCheck(req.body)) {
     console.log('資料完整，可以開始存資料了')
@@ -73,7 +75,7 @@ router.post('/', (req, res) => {
 })
 
 // Read 取得特定表單內容
-router.get('/:id', (req, res) => {
+router.get('/:id', authenticated, (req, res) => {
   Restaurant.findById(req.params.id)
     .lean()
     .exec((err, restaurant) => {
@@ -83,7 +85,7 @@ router.get('/:id', (req, res) => {
 })
 
 // Update 取得修改表單頁面
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit', authenticated, (req, res) => {
   Restaurant.findById(req.params.id)
     .lean()
     .exec((err, restaurant) => {
@@ -93,7 +95,7 @@ router.get('/:id/edit', (req, res) => {
 })
 
 // Update 修改表單
-router.put('/:id/edit', (req, res) => {
+router.put('/:id/edit', authenticated, (req, res) => {
   Restaurant.findById(req.params.id, (err, data) => {
     if (err) return console.error(err)
     data.name = req.body.name
@@ -113,7 +115,7 @@ router.put('/:id/edit', (req, res) => {
 })
 
 // Delete 刪除一筆表單
-router.delete('/:id/delete', (req, res) => {
+router.delete('/:id/delete', authenticated, (req, res) => {
   Restaurant.findById(req.params.id, (err, data) => {
     if (err) return console.error(err)
     data.remove(err => {
