@@ -25,6 +25,7 @@ router.get('/', authenticated, (req, res) => {
 router.get('/search', authenticated, (req, res) => {
   const word = req.query.keyword
   Restaurant.find({
+    userId: req.user._id,
     $or: [
       { 'name': { "$regex": word.toString(), "$options": "i" } },
       { 'name_en': { "$regex": word.toString(), "$options": "i" } },
