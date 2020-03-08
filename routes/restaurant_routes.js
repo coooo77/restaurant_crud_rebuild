@@ -12,7 +12,7 @@ const { authenticated } = require('../config/auth')
 // 有空閒回來試著將搜索、排序功能合併
 router.get('/', authenticated, (req, res) => {
   const search_order = req.query.search_order
-  Restaurant.find()
+  Restaurant.find({ userId: req.user._id })
     .sort(search_order)
     .lean()
     .exec((err, restaurants) => {
@@ -52,7 +52,7 @@ router.post('/', authenticated, (req, res) => {
 
   if (listCheck(req.body)) {
     console.log('資料完整，可以開始存資料了')
-    const newList = new Restaurant({
+    const restaurant = new Restaurant({
       name: req.body.name,
       name_en: req.body.name_en,
       category: req.body.category,
@@ -61,9 +61,10 @@ router.post('/', authenticated, (req, res) => {
       phone: req.body.phone,
       google_map: req.body.google_map,
       rating: req.body.rating,
-      description: req.body.description
+      description: req.body.description,
+      userId: req.user._id
     })
-    newList.save(err => {
+    restaurant.save(err => {
       if (err) return console.error(err)
       return res.redirect('/')
     })
@@ -76,7 +77,7 @@ router.post('/', authenticated, (req, res) => {
 
 // Read 取得特定表單內容
 router.get('/:id', authenticated, (req, res) => {
-  Restaurant.findById(req.params.id)
+  Restaurant.findOne({ _id: req.params.id, userId: req.user._id })
     .lean()
     .exec((err, restaurant) => {
       if (err) return console.error(err)
@@ -86,7 +87,7 @@ router.get('/:id', authenticated, (req, res) => {
 
 // Update 取得修改表單頁面
 router.get('/:id/edit', authenticated, (req, res) => {
-  Restaurant.findById(req.params.id)
+  Restaurant.findOne({ _id: req.params.id, userId: req.user._id })
     .lean()
     .exec((err, restaurant) => {
       if (err) return console.error(err)
@@ -96,17 +97,9 @@ router.get('/:id/edit', authenticated, (req, res) => {
 
 // Update 修改表單
 router.put('/:id/edit', authenticated, (req, res) => {
-  Restaurant.findById(req.params.id, (err, data) => {
+  Restaurant.findOne({ _id: req.params.id, userId: req.user._id }, (err, data) => {
     if (err) return console.error(err)
-    data.name = req.body.name
-    data.name_en = req.body.name_en
-    data.category = req.body.category
-    data.image = req.body.image
-    data.location = req.body.location
-    data.phone = req.body.phone
-    data.google_map = req.body.google_map
-    data.rating = req.body.rating
-    data.description = req.body.description
+    Object.assign(data, req.body)
     data.save(err => {
       if (err) return console.error(err)
       return res.redirect(`/restaurants/${req.params.id}`)
@@ -116,7 +109,7 @@ router.put('/:id/edit', authenticated, (req, res) => {
 
 // Delete 刪除一筆表單
 router.delete('/:id/delete', authenticated, (req, res) => {
-  Restaurant.findById(req.params.id, (err, data) => {
+  Restaurant.findOne({ _id: req.params.id, userId: req.user._id }, (err, data) => {
     if (err) return console.error(err)
     data.remove(err => {
       if (err) return console.error(err)

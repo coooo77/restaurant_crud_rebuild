@@ -1,10 +1,12 @@
 const mongoose = require('mongoose')
-// 引入Restaurant建立實例，存到db中
+// 引入Restaurant、User建立實例，存到db中
 const Restaurant = require('../restaurant')
+const User = require('../user')
 // 引入JSON種子資料
+const UserList = require('./user')
 const restaurantList = require('./restaurant')
 
-mongoose.connect('mongodb://localhost/restaurant_list', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://localhost/restaurant_list', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 
 const db = mongoose.connection
 
@@ -14,19 +16,51 @@ db.on('error', () => {
 
 db.once('open', () => {
   console.log('mongodb connected！')
-  // console.log('restaurantList.result.length', restaurantList.results[0].google_map)
-  for (let i = 0; i < restaurantList.results.length; i++) {
-    Restaurant.create({
-      name: restaurantList.results[i].name,
-      name_en: restaurantList.results[i].name_en,
-      category: restaurantList.results[i].category,
-      image: restaurantList.results[i].image,
-      location: restaurantList.results[i].location,
-      phone: restaurantList.results[i].phone,
-      google_map: restaurantList.results[i].google_map,
-      rating: restaurantList.results[i].rating,
-      description: restaurantList.results[i].description,
-    })
+
+  // 雖然已經先存入使用者了，但是找不到該使用者，WHY?
+  // 看別人作法是分開輸入使用者跟餐廳清單才成功。
+
+  // for (let i = 0; i < UserList.users.length; i++) {
+  //   const newUser = new User(UserList.users[i])
+  //   newUser.save()
+  // } 
+
+  // User.findOne({ name: "使用者01" }, (err, user) => {
+  //   if (err) return console.error(err)
+  //   console.log('user', user)
+  //   for (let i = 0; i < 3; i++) {
+  //     restaurantList.results[i].userId = user._id
+  //     Restaurant.create(restaurantList.results[i])
+  //   }
+  // })
+  // User.findOne({ name: "使用者02" }, (err, user) => {
+  //   if (err) return console.error(err)
+  //   for (let i = 3; i < 6; i++) {
+  //     restaurantList.results[i].userId = user._i
+  //     Restaurant.create(restaurantList.results[i])
+  //   }
+  // })
+
+  // 參考別人的做法，先做一個空陣列貯存使用者資料
+  const users = []
+  for (let i = 0; i < UserList.users.length; i++) {
+    const newUser = new User(UserList.users[i])
+    users.push(newUser)
+    newUser.save()
   }
+
+  // 給使用者01 #1~#3資料
+  for (let i = 0; i < 3; i++) {
+    restaurantList.results[i].userId = users[0]._id
+    Restaurant.create(restaurantList.results[i])
+  }
+  // 給使用者02 #4~#6資料
+  for (let i = 3; i < 6; i++) {
+    restaurantList.results[i].userId = users[1]._id
+    Restaurant.create(restaurantList.results[i])
+  }
+
+  // node restaurantSeeder.js
+
   console.log('done！')
 })
