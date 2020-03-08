@@ -1,4 +1,7 @@
 const express = require('express')
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const app = express()
 const port = 3000
 const exphbs = require('express-handlebars')
@@ -44,6 +47,7 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/home'))
 app.use('/restaurants', require('./routes/restaurant_routes'))
 app.use('/users', require('./routes/user'))
+app.use('/auth', require('./routes/auths'))
 
 app.listen(port, () => {
   console.log(`The express is listening on http://localhost:${port}`)
