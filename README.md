@@ -23,11 +23,11 @@
 ## 安裝與執行步驟 (installation and execution)：
 1. 下載Github頁面上內容
 ```console
-git clone https://github.com/coooo77/restaurant_crud_rebuild_ver1
+git clone https://github.com/coooo77/restaurant_with_login
 ```
-2. 啟動Node.js cmd以指令cd移動至restaurant_crud_rebuild_ver1資料夾底下
+2. 啟動Node.js cmd以指令cd移動至restaurant_with_login資料夾底下
 ```console
-cd 下載位置/restaurant_crud_rebuild_ver1
+cd 下載位置/restaurant_with_login
 ```
 3. 根據環境建置與需求安裝軟體與套件
 ```console
@@ -35,7 +35,7 @@ npm install
 ```
 4. 輸入種子資料
 ```console
-cd 下載位置/restaurant_crud_rebuild/models
+cd 下載位置/restaurant_with_login/models
 node restaurantSeeder.js
 ```
 
@@ -49,7 +49,7 @@ FACEBOOK_CALLBACK=http://localhost:3000/auth/facebook/callback
 
 6. 啟動專案
 ```console
-cd 下載位置/restaurant_crud_rebuild_ver1
+cd 下載位置/restaurant_with_login
 npm run dev
 ```
 7. 開啟瀏覽器，輸入網址
