@@ -4,40 +4,43 @@
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="inputEmail4">餐廳名稱</label>
-          <input type="text" class="form-control" name="name" placeholder="餐廳名稱">
+          <input type="text" class="form-control" name="name" placeholder="餐廳名稱" value="{{data.name}}">
         </div>
         <div class="form-group col-md-4">
           <label for="inputEmail4">餐廳英文名稱</label>
-          <input type="text" class="form-control" name="name_en" placeholder="餐廳英文名稱">
+          <input type="text" class="form-control" name="name_en" placeholder="餐廳英文名稱" value="{{data.name_en}}">
         </div>
         <div class="form-group col-md-4">
           <label for="inputPassword4">餐廳類別</label>
-          <input type="text" class="form-control" name="category" placeholder="餐廳類別">
+          <input type="text" class="form-control" name="category" placeholder="餐廳類別" value="{{data.category}}">>
         </div>
         <div class="form-group col-md-3">
           <label for="inputPassword4">地址</label>
-          <input type="text" class="form-control" name="location" placeholder="地址">
+          <input type="text" class="form-control" name="location" placeholder="地址" value="{{data.location}}">
         </div>
         <div class="form-group col-md-3">
           <label for="inputPassword4">連絡電話</label>
-          <input type="text" class="form-control" name="phone" placeholder="連絡電話">
+          <input type="text" class="form-control" name="phone" placeholder="連絡電話" value="{{data.phone}}">
         </div>
         <div class="form-group col-md-3">
           <label for="inputPassword4">Google Map</label>
-          <input type="text" class="form-control" name="google_map" placeholder="Google Map連結">
+          <input type="text" class="form-control" name="google_map" placeholder="Google Map連結"
+            value="{{data.google_map}}">
         </div>
         <div class="form-group col-md-3">
           <label for="inputPassword4">評分</label>
-          <input type="text" class="form-control" name="rating" placeholder="評分">
+          <input type="number" class="form-control" name="rating" placeholder="評分，範圍是0到5" value="{{data.rating}}"
+            max="5" min="0">
         </div>
       </div>
       <div class="form-group">
         <label for="inputAddress">Image URL</label>
-        <input type="text" class="form-control" name="image" placeholder="https://">
+        <input type="text" class="form-control" name="image" placeholder="https://" value="{{data.image}}">
       </div>
       <div class="form-group">
         <label for="inputAddress">針對餐廳的描述</label>
-        <textarea type="text" class="form-control" name="description" placeholder="針對餐廳的描述"></textarea>
+        <textarea type="text" class="form-control" name="description"
+          placeholder="針對餐廳的描述">{{data.description}}</textarea>
       </div>
       <button type="submit" class="btn btn-primary">送出資料</button>
     </form>

@@ -61,11 +61,12 @@
                 style="background-color: rgba(,255,204,0.2);">
                 <a class="mr-2 mt-1" href="/restaurants/{{this._id}}/edit">Edit</a>
                 <a class="mr-2 mt-1" href="/restaurants/{{this._id}}">Detail</a>
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                <button type="button" class="btn btn-danger" data-toggle="modal"
+                  data-target="#exampleModal{{this._id}}">
                   Delete
                 </button>
 
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                <div class="modal fade" id="exampleModal{{this._id}}" tabindex="-1" role="dialog"
                   aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -78,7 +79,7 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                        確定要刪除嗎?放棄也是一種選擇唷！
+                        確定要刪除{{this.name}}嗎?放棄也是一種選擇唷！
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">放棄</button>

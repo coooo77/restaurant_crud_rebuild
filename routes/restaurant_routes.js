@@ -50,7 +50,8 @@ router.get('/new', authenticated, (req, res) => {
 // 針對資料輸入的優化，等時間夠再來修正 (例如Rating跟phone都是數字)
 // 有排版上的問題，如果不是用card屬性增加edit、Detail、Delete，排版會崩壞
 router.post('/', authenticated, (req, res) => {
-
+  const data = req.body
+  console.log(data)
   if (listCheck(req.body)) {
     console.log('資料完整，可以開始存資料了')
     const restaurant = new Restaurant({
@@ -72,7 +73,7 @@ router.post('/', authenticated, (req, res) => {
   } else {
     console.log('網頁引導至/restaurants/new，提示資料不完整')
     const result = listCheck(req.body)
-    return res.render('new', { result: !result })
+    return res.render('new', { result: !result, data })
   }
 })
 
